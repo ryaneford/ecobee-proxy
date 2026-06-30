@@ -1,0 +1,28 @@
+# Ecobee thermostat widget for Luna/Glance
+# Requires ecobee-proxy running on port 5050
+# Repo: https://github.com/YOUR_USERNAME/ecobee-proxy
+
+- type: custom-api
+  title: Thermostat
+  cache: 2m
+  url: http://host.docker.internal:5050/thermostat
+  template: |
+    {{ $err := .JSON.String "error" }}
+    {{ if $err }}
+      <p class="color-negative size-h5">{{ $err }}</p>
+    {{ else }}
+      <div class="flex gap-15 items-center">
+        <div class="text-center" style="min-width: 4.5rem; flex-shrink: 0;">
+          <div class="color-highlight" style="font-size: 2.8rem; line-height: 1.1">{{ .JSON.String "temperature" }}°{{ .JSON.String "unit" }}</div>
+          <div class="size-h6 color-subdue margin-top-3">{{ .JSON.String "humidity" }}% RH</div>
+        </div>
+        <div class="flex flex-column gap-5" style="border-left: 2px solid var(--color-separator); padding-left: 12px;">
+          <div class="size-h5 color-highlight">{{ .JSON.String "name" }}</div>
+          <div class="size-h5 color-subdue">{{ .JSON.String "hvac_state" }} · {{ .JSON.String "hvac_mode" }}</div>
+          <div class="size-h5 color-subdue">Heat ↑ {{ .JSON.String "heat_setpoint" }}°  Cool ↓ {{ .JSON.String "cool_setpoint" }}°</div>
+          {{ if .JSON.String "outdoor_temp" }}
+            <div class="size-h5 color-subdue">Outdoor {{ .JSON.String "outdoor_temp" }}°</div>
+          {{ end }}
+        </div>
+      </div>
+    {{ end }}

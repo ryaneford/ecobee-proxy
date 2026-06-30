@@ -1,0 +1,12 @@
+services:
+  ecobee-proxy:
+    build: .
+    container_name: ecobee-proxy
+    restart: unless-stopped
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./data:/data
+    environment:
+      - ECOBEE_API_KEY=${ECOBEE_API_KEY}
+      - UNIT=${UNIT:-F}   # C or F
