@@ -31,10 +31,14 @@ Supports **Fahrenheit** and **Celsius** via an env var.
 ### 2. Start the proxy
 
 ```bash
+git clone https://github.com/ryaneford/ecobee-proxy.git
+cd ecobee-proxy
 cp .env.example .env
 # Edit .env and paste your API key
 docker compose up -d
 ```
+
+The image is published at [`ryaneford/ecobee-proxy`](https://hub.docker.com/r/ryaneford/ecobee-proxy) (`linux/amd64` + `linux/arm64`) — `docker compose up -d` pulls it directly, no build step needed.
 
 ### 3. Authorize (one-time)
 

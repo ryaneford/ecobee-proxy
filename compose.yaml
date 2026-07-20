@@ -1,6 +1,6 @@
 services:
   ecobee-proxy:
-    build: .
+    image: ryaneford/ecobee-proxy:latest
     container_name: ecobee-proxy
     restart: unless-stopped
     ports:
