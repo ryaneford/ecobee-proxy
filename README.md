@@ -40,6 +40,23 @@ docker compose up -d
 
 The image is published at [`ryaneford/ecobee-proxy`](https://hub.docker.com/r/ryaneford/ecobee-proxy) (`linux/amd64` + `linux/arm64`) — `docker compose up -d` pulls it directly, no build step needed.
 
+`compose.yaml`:
+
+```yaml
+services:
+  ecobee-proxy:
+    image: ryaneford/ecobee-proxy:latest
+    container_name: ecobee-proxy
+    restart: unless-stopped
+    ports:
+      - "5050:5050"
+    volumes:
+      - ./data:/data
+    environment:
+      - ECOBEE_API_KEY=${ECOBEE_API_KEY}
+      - UNIT=${UNIT:-F}   # C or F
+```
+
 ### 3. Authorize (one-time)
 
 ```bash
